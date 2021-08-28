@@ -5,16 +5,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.tanksbattle.R;
+import com.example.tanksbattle.activity.MainActivity;
+import com.example.tanksbattle.view.GameView;
 
 public class GameFragment extends Fragment {
 
+    private GameView gameView;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_menu, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        gameView = new GameView(MainActivity.appCompatActivity);
+
+
+        return gameView;
     }//onCreateView
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        gameView.pause();
+    }//onPause
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        gameView.resume();
+    }//onResume
+
 }//LoadingFragment
