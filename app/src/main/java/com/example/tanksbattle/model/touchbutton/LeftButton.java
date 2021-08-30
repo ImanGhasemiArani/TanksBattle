@@ -43,6 +43,7 @@ public class LeftButton extends Button {
     @Override
     public void update(Tank playerTank) {
         if (isPressed) {
+            playerTank.nextTrackRightImage();
             playerTank.updateAngle(-playerTank.getMaxSpeed() / 2f * (screenRatioX + screenRatioY) / 2f);
         }
     }

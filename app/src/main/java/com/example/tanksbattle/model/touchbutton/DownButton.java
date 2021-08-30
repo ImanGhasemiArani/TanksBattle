@@ -43,6 +43,8 @@ public class DownButton extends Button {
     @Override
     public void update(Tank playerTank) {
         if (isPressed) {
+            playerTank.nextTrackRightImage();
+            playerTank.nextTrackLeftImage();
             playerTank.updateXY(-Math.sin(playerTank.getAngle()) * playerTank.getMaxSpeed() * screenRatioX,
                     Math.cos(playerTank.getAngle()) * playerTank.getMaxSpeed()* screenRatioY);
         }

@@ -40,9 +40,9 @@ public class Tank {
         hull = new Hull(this, TankImage.TANK_HULL[0], x, y, res);
         gun = new Gun(TankImage.TANK_GUN[0], x, y, res);
         gun.setSwap(height/5f);
-        rightTrack = new Track(TankImage.TANK_TRACK_A[0], x, y, res);
+        rightTrack = new Track(TankImage.TANK_TRACK_A[0], TankImage.TANK_TRACK_B[0], x, y, res);
         rightTrack.setSwap(width/2f-rightTrack.getWidth()*2/3f, -height/2f);
-        leftTrack = new Track(TankImage.TANK_TRACK_A[0], x, y, res);
+        leftTrack = new Track(TankImage.TANK_TRACK_A[0], TankImage.TANK_TRACK_B[0], x, y, res);
         leftTrack.setSwap(-width/2f-leftTrack.getWidth()/3f, -height/2f);
 
     }//Constructor method
@@ -111,5 +111,21 @@ public class Tank {
 
     public int getGunRotating() {
         return gunRotating;
+    }
+
+    public void nextTrackLeftImage() {
+        if (leftTrack.wingCounter == 0) {
+            leftTrack.wingCounter++;
+        } else {
+            leftTrack.wingCounter = 0;
+        }
+    }
+
+    public void nextTrackRightImage() {
+        if (rightTrack.wingCounter == 0) {
+            rightTrack.wingCounter++;
+        } else {
+            rightTrack.wingCounter = 0;
+        }
     }
 }//Tank

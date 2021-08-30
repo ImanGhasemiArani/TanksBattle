@@ -14,21 +14,25 @@ public class Track {
     private double x, y;
     private int maxSpeed;
     private int width, height, swapX, swapY;
+    public int wingCounter;
     private final double wPH;
-    private Bitmap track;
+    private Bitmap trackA, trackB;
     private Matrix matrix;
 
-    public Track(int trackId, int x, int y, Resources res) {
-        track = BitmapFactory.decodeResource(res, trackId);
-        width = track.getWidth();
-        height = track.getHeight();
+    public Track(int trackAId, int trackBId, int x, int y, Resources res) {
+        trackA = BitmapFactory.decodeResource(res, trackAId);
+        trackB = BitmapFactory.decodeResource(res, trackBId);
+        width = trackA.getWidth();
+        height = trackA.getHeight();
         wPH = (double) width / (double) height;
-        width = (int) (track.getWidth() / 3 * screenRatioX);
+        width = (int) (trackA.getWidth() / 3 * screenRatioX);
         height = (int) (width / wPH);
-        track = Bitmap.createScaledBitmap(track, width, height, false);
+        trackA = Bitmap.createScaledBitmap(trackA, width, height, false);
+        trackB = Bitmap.createScaledBitmap(trackB, width, height, false);
 
         this.x = x;
         this.y = y;
+        wingCounter = 0;
 
         matrix = new Matrix();
 
@@ -43,9 +47,16 @@ public class Track {
         matrix.postTranslate((float) x,(float) y);
     }//update
 
+    private Bitmap getTrack() {
+        if (wingCounter == 0) {
+            return trackA;
+        }
+        return trackB;
+    }
+
     public void draw(Canvas canvas, Paint paint) {
         //draw in canvas
-        canvas.drawBitmap(track, matrix, paint);
+        canvas.drawBitmap(getTrack(), matrix, paint);
     }//draw
 
     public int getWidth() {
