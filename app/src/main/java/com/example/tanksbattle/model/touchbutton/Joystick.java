@@ -1,9 +1,8 @@
-package com.example.tanksbattle.joystick;
+package com.example.tanksbattle.model.touchbutton;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-
 
 public class Joystick {
 
@@ -19,6 +18,7 @@ public class Joystick {
     private boolean isPressed;
     private double actuatorX;
     private double actuatorY;
+    private double deltaX, deltaY;
 
     public Joystick(int centerPositionX, int centerPositionY, int outerCircleRadius, int innerCircleRadius) {
 
@@ -60,8 +60,8 @@ public class Joystick {
     }//getIsPressed
 
     public void setActuator(double touchPositionX, double touchPositionY) {
-        double deltaX = touchPositionX - outerCircleCenterPositionX;
-        double deltaY =  touchPositionY - outerCircleCenterPositionY;
+        deltaX = touchPositionX - outerCircleCenterPositionX;
+        deltaY =  touchPositionY - outerCircleCenterPositionY;
         double deltaDistance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
 
         if (deltaDistance < outerCircleRadius) {
@@ -99,4 +99,12 @@ public class Joystick {
     public double getActuatorY() {
         return actuatorY;
     }//getActuatorY
-}//Joystick
+
+    public double getAngle() {
+        if (deltaX == 0) {
+            return 0;
+        }else {
+            return (Math.atan(deltaY / deltaX)) * 180 / Math.PI;
+        }
+    }
+}
