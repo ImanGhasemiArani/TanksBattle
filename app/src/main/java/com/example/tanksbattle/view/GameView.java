@@ -16,7 +16,7 @@ import androidx.core.view.MotionEventCompat;
 
 import com.example.tanksbattle.R;
 import com.example.tanksbattle.model.tank.Tank;
-import com.example.tanksbattle.model.touchbutton.ArrowButton;
+import com.example.tanksbattle.model.touchbutton.Button;
 import com.example.tanksbattle.model.touchbutton.DownButton;
 import com.example.tanksbattle.model.touchbutton.LeftButton;
 import com.example.tanksbattle.model.touchbutton.RightButton;
@@ -29,7 +29,7 @@ public class GameView extends SurfaceView implements Runnable {
     private boolean isPlaying;
     private final Paint paint;
 //    private final Joystick joystick;
-    private final ArrowButton buttons[];
+    private final Button buttons[];
 //    private final UpButton upButton;
 //    private final DownButton downButton;
 //    private final RightButton rightButton;
@@ -44,7 +44,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         //define the joystick
 //        joystick = new Joystick(screenX / 5 , screenY / 4 * 3, screenX / 15, screenX / 40);
-        buttons = new ArrowButton[4];
+        buttons = new Button[4];
         buttons[0] = new UpButton(screenX / 9, screenY / 6*3, getResources());
         buttons[1] = new DownButton(screenX / 9, screenY / 6*3 + screenY / 5, getResources());
         buttons[2] = new RightButton(screenX / 7 * 5 + screenX / 9, screenY / 6*3 + screenY / 5, getResources());
@@ -52,7 +52,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         setFixBackground();
 
-        playerTank = new Tank(getResources());
+        playerTank = new Tank(screenX/2, screenY/2, getResources(), buttons);
 
 
     }//Constructor method
@@ -72,10 +72,6 @@ public class GameView extends SurfaceView implements Runnable {
 
         //update joystick
 //        joystick.update();
-//        upButton.update();
-//        downButton.update();
-//        rightButton.update();
-//        leftButton.update();
 
     }//update
 
@@ -89,7 +85,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             //draw joystick
 //            joystick.draw(canvas);
-            for (ArrowButton button : buttons)
+            for (Button button : buttons)
                 button.draw(canvas, paint);
 
             getHolder().unlockCanvasAndPost(canvas);
@@ -151,24 +147,34 @@ public class GameView extends SurfaceView implements Runnable {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_POINTER_DOWN:
-                for (ArrowButton button: buttons) {
+                for (Button button: buttons) {
                     if (!button.getIsPressed()) {
                         if (button.isPressed(event.getX(index), event.getY(index))) {
                             button.setIsPressed(true);
-                            button.updateDown();
+                            button.pressedDown();
                         }
+                    }
+                }
+                if (playerTank.getGunRotating() == 0 && !buttons[2].getIsPressed() && !buttons[3].getIsPressed()) {
+                    if (event.getX(index) > screenX*5/6f) {
+                        playerTank.setGunRotating(1);
+                    }else if (event.getX(index) > screenX*4/6f && event.getX(index) < screenX*5/6f) {
+                        playerTank.setGunRotating(2);
                     }
                 }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
-                for (ArrowButton button: buttons) {
+                for (Button button: buttons) {
                     if (button.getIsPressed()) {
                         if (button.isPressed(event.getX(index), event.getY(index))) {
                             button.setIsPressed(false);
-                            button.updateUp();
+                            button.pressedUp();
                         }
                     }
+                }
+                if (playerTank.getGunRotating() != 0 && event.getX(index) > screenX*4/6f && event.getX(index) < screenX) {
+                    playerTank.setGunRotating(0);
                 }
                 break;
             //case

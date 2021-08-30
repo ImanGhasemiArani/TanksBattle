@@ -6,13 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-public abstract class ArrowButton {
+import com.example.tanksbattle.model.tank.Tank;
+
+public abstract class Button implements ButtonInterface{
     protected int x, y, cX, cY;
     protected int width, height;
     protected Bitmap button;
     protected boolean isPressed;
 
-    public ArrowButton(int x, int y, Resources res) {
+    public Button(int x, int y, Resources res) {
         this.x = x;
         this.y = y;
         isPressed = false;
@@ -21,9 +23,9 @@ public abstract class ArrowButton {
 
     protected abstract void setBitmap(Resources res);
 
-    public abstract void updateDown();
+    public abstract void pressedDown();
 
-    public abstract void updateUp();
+    public abstract void pressedUp();
 
     public void draw(Canvas canvas, Paint paint) {
         canvas.drawBitmap(button, x, y, paint);
