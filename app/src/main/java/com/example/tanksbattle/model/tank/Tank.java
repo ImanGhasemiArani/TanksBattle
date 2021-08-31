@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.example.tanksbattle.image.TankImage;
+import com.example.tanksbattle.model.tankobject.MovingFire;
 import com.example.tanksbattle.model.tankobject.Tire;
 import com.example.tanksbattle.model.touchbutton.ButtonInterface;
 import com.example.tanksbattle.model.tankobject.Gun;
@@ -27,6 +28,8 @@ public class Tank {
     private Track leftTrack;
     private Tire rightTire;
     private Tire leftTire;
+    private MovingFire rightMovingFire;
+    private MovingFire leftMovingFire;
     private final ButtonInterface[] buttons;
     private int gunRotating;
     private boolean isShooting;
@@ -54,6 +57,11 @@ public class Tank {
         rightTire = new Tire(TankImage.TIRE_TANK[0], x, y, res);
         leftTire = new Tire(TankImage.TIRE_TANK[0], x, y, res);
         setSwapTiresUp();
+
+        rightMovingFire = new MovingFire(TankImage.OTHER_OBJECTS[0], x, y, res);
+        rightMovingFire.setSwap(rightMovingFire.getWidth()*2/3f, height/2f);
+        leftMovingFire = new MovingFire(TankImage.OTHER_OBJECTS[0], x, y, res);
+        leftMovingFire.setSwap(-leftMovingFire.getWidth()*4/3f, height/2f);
 
 
     }//Constructor method
@@ -87,21 +95,33 @@ public class Tank {
 
     private void updateTankObjects() {
         hull.update(x, y, angle);
+
         gun.update(x, y, angle, gunAngle);
+
         rightTrack.update(x, y, angle);
         leftTrack.update(x, y, angle);
 
         rightTire.update(x, y, angle);
         leftTire.update(x, y, angle);
+
+        rightMovingFire.update(x, y, angle);
+        leftMovingFire.update(x, y, angle);
     }//updateTankObjects
 
     public void draw(Canvas canvas, Paint paint) {
+
         rightTire.draw(canvas, paint);
         leftTire.draw(canvas, paint);
+
         leftTrack.draw(canvas, paint);
         rightTrack.draw(canvas, paint);
+
         hull.draw(canvas, paint);
+
         gun.draw(canvas,paint);
+
+        rightMovingFire.draw(canvas, paint);
+        leftMovingFire.draw(canvas, paint);
     }//draw
 
     public int getMaxSpeed() {
@@ -136,6 +156,7 @@ public class Tank {
             leftTrack.wingCounter = 0;
         }
         leftTire.isDraw = true;
+        leftMovingFire.isDraw = true;
     }
 
     public void nextTrackRightImage() {
@@ -145,6 +166,7 @@ public class Tank {
             rightTrack.wingCounter = 0;
         }
         rightTire.isDraw = true;
+        rightMovingFire.isDraw = true;
     }
 
     public void setSwapTiresUp() {
