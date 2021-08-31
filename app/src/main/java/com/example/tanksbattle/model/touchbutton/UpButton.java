@@ -42,6 +42,7 @@ public class UpButton extends Button {
         if (isPressed) {
             playerTank.nextTrackRightImage();
             playerTank.nextTrackLeftImage();
+            playerTank.setSwapTiresUp();
             playerTank.updateXY(Math.sin(playerTank.getAngle()) * playerTank.getMaxSpeed() * screenRatioX,
                     -Math.cos(playerTank.getAngle()) * playerTank.getMaxSpeed()* screenRatioY);
         }

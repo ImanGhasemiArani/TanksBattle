@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.example.tanksbattle.image.TankImage;
+import com.example.tanksbattle.model.tankobject.Tire;
 import com.example.tanksbattle.model.touchbutton.ButtonInterface;
 import com.example.tanksbattle.model.tankobject.Gun;
 import com.example.tanksbattle.model.tankobject.Hull;
@@ -24,6 +25,8 @@ public class Tank {
     private Gun gun;
     private Track rightTrack;
     private Track leftTrack;
+    private Tire rightTire;
+    private Tire leftTire;
     private final ButtonInterface[] buttons;
     private int gunRotating;
     private boolean isShooting;
@@ -37,13 +40,21 @@ public class Tank {
         maxSpeed = 10;
         gunRotating = 0;
         isShooting = false;
+
         hull = new Hull(this, TankImage.TANK_HULL[0], x, y, res);
+
         gun = new Gun(TankImage.TANK_GUN[0], x, y, res);
         gun.setSwap(height/5f);
+
         rightTrack = new Track(TankImage.TANK_TRACK_A[0], TankImage.TANK_TRACK_B[0], x, y, res);
         rightTrack.setSwap(width/2f-rightTrack.getWidth()*2/3f, -height/2f);
         leftTrack = new Track(TankImage.TANK_TRACK_A[0], TankImage.TANK_TRACK_B[0], x, y, res);
         leftTrack.setSwap(-width/2f-leftTrack.getWidth()/3f, -height/2f);
+
+        rightTire = new Tire(TankImage.TIRE_TANK[0], x, y, res);
+        leftTire = new Tire(TankImage.TIRE_TANK[0], x, y, res);
+        setSwapTiresUp();
+
 
     }//Constructor method
 
@@ -79,9 +90,14 @@ public class Tank {
         gun.update(x, y, angle, gunAngle);
         rightTrack.update(x, y, angle);
         leftTrack.update(x, y, angle);
+
+        rightTire.update(x, y, angle);
+        leftTire.update(x, y, angle);
     }//updateTankObjects
 
     public void draw(Canvas canvas, Paint paint) {
+        rightTire.draw(canvas, paint);
+        leftTire.draw(canvas, paint);
         leftTrack.draw(canvas, paint);
         rightTrack.draw(canvas, paint);
         hull.draw(canvas, paint);
@@ -119,6 +135,7 @@ public class Tank {
         } else {
             leftTrack.wingCounter = 0;
         }
+        leftTire.isDraw = true;
     }
 
     public void nextTrackRightImage() {
@@ -127,5 +144,16 @@ public class Tank {
         } else {
             rightTrack.wingCounter = 0;
         }
+        rightTire.isDraw = true;
+    }
+
+    public void setSwapTiresUp() {
+        rightTire.setSwap(width/2f - rightTire.getWidth()*2/3f, height/2f);
+        leftTire.setSwap(-width/2f - leftTire.getWidth()/3f, height/2f);
+    }
+
+    public void setSwapTiresDown() {
+        rightTire.setSwap(width/2f - rightTire.getWidth()*2/3f, -height/2f - rightTire.getHeight()/2f);
+        leftTire.setSwap(-width/2f - leftTire.getWidth()/3f, -height/2f - leftTire.getHeight()/2f);
     }
 }//Tank

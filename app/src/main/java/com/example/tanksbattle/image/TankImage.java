@@ -12,4 +12,6 @@ public class TankImage {
 
     public final static int[] TANK_TRACK_B= new int[] {R.drawable.track_1_b};
 
+    public final static int[] TIRE_TANK = new int[] {R.drawable.tire_track_1, R.drawable.tire_track_2};
+
 }

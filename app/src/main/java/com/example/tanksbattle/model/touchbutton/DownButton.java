@@ -45,6 +45,7 @@ public class DownButton extends Button {
         if (isPressed) {
             playerTank.nextTrackRightImage();
             playerTank.nextTrackLeftImage();
+            playerTank.setSwapTiresDown();
             playerTank.updateXY(-Math.sin(playerTank.getAngle()) * playerTank.getMaxSpeed() * screenRatioX,
                     Math.cos(playerTank.getAngle()) * playerTank.getMaxSpeed()* screenRatioY);
         }
