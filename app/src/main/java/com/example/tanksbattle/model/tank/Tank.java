@@ -59,7 +59,7 @@ public class Tank {
         setSwapTiresUp();
 
         rightMovingFire = new MovingFire(TankImage.OTHER_OBJECTS[0], x, y, res);
-        rightMovingFire.setSwap(rightMovingFire.getWidth()*2/3f, height/2f);
+        rightMovingFire.setSwap(rightMovingFire.getWidth()/3f, height/2f);
         leftMovingFire = new MovingFire(TankImage.OTHER_OBJECTS[0], x, y, res);
         leftMovingFire.setSwap(-leftMovingFire.getWidth()*4/3f, height/2f);
 
