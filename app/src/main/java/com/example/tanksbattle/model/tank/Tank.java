@@ -2,12 +2,17 @@ package com.example.tanksbattle.model.tank;
 
 import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
 import static com.example.tanksbattle.activity.MainActivity.screenRatioY;
+import static com.example.tanksbattle.activity.MainActivity.screenX;
+import static com.example.tanksbattle.activity.MainActivity.screenY;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
-import com.example.tanksbattle.image.TankImage;
+import com.example.tanksbattle.factory.BackgroundFactory;
+import com.example.tanksbattle.factory.BattleGroundFactory;
+import com.example.tanksbattle.image.Image;
 import com.example.tanksbattle.model.tankobject.MovingFire;
 import com.example.tanksbattle.model.tankobject.Tire;
 import com.example.tanksbattle.model.touchbutton.ButtonInterface;
@@ -30,13 +35,14 @@ public class Tank {
     private Tire leftTire;
     private MovingFire rightMovingFire;
     private MovingFire leftMovingFire;
-    private final ButtonInterface[] buttons;
     private int gunRotating;
     private boolean isShooting;
 
-    public Tank(int x, int y, Resources res, ButtonInterface[] buttons) {
+    private BattleGroundFactory battleGroundFactory;
+
+    public Tank(int x, int y, Resources res, BattleGroundFactory battleGroundFactory) {
+        this.battleGroundFactory = battleGroundFactory;
         this.res = res;
-        this.buttons = buttons;
         this.x = x;
         this.y = y;
         angle = gunAngle = 0;
@@ -44,29 +50,29 @@ public class Tank {
         gunRotating = 0;
         isShooting = false;
 
-        hull = new Hull(this, TankImage.TANK_HULL[0], x, y, res);
+        hull = new Hull(this, Image.TANK_HULL[0], x, y, res);
 
-        gun = new Gun(TankImage.TANK_GUN[0], x, y, res);
+        gun = new Gun(Image.TANK_GUN[1], x, y, res);
         gun.setSwap(height/5f);
 
-        rightTrack = new Track(TankImage.TANK_TRACK_A[0], TankImage.TANK_TRACK_B[0], x, y, res);
+        rightTrack = new Track(Image.TANK_TRACK_A[0], Image.TANK_TRACK_B[0], x, y, res);
         rightTrack.setSwap(width/2f-rightTrack.getWidth()*2/3f, -height/2f);
-        leftTrack = new Track(TankImage.TANK_TRACK_A[0], TankImage.TANK_TRACK_B[0], x, y, res);
+        leftTrack = new Track(Image.TANK_TRACK_A[0], Image.TANK_TRACK_B[0], x, y, res);
         leftTrack.setSwap(-width/2f-leftTrack.getWidth()/3f, -height/2f);
 
-        rightTire = new Tire(TankImage.TIRE_TANK[0], x, y, res);
-        leftTire = new Tire(TankImage.TIRE_TANK[0], x, y, res);
+        rightTire = new Tire(Image.TANK_TIRE[0], x, y, res);
+        leftTire = new Tire(Image.TANK_TIRE[0], x, y, res);
         setSwapTiresUp();
 
-        rightMovingFire = new MovingFire(TankImage.OTHER_OBJECTS[0], x, y, res);
+        rightMovingFire = new MovingFire(Image.OTHER_OBJECTS[0], x, y, res);
         rightMovingFire.setSwap(rightMovingFire.getWidth()/3f, height/2f);
-        leftMovingFire = new MovingFire(TankImage.OTHER_OBJECTS[0], x, y, res);
+        leftMovingFire = new MovingFire(Image.OTHER_OBJECTS[0], x, y, res);
         leftMovingFire.setSwap(-leftMovingFire.getWidth()*4/3f, height/2f);
 
 
     }//Constructor method
 
-    public void update() {
+    public void update(ButtonInterface[] buttons) {
         for (ButtonInterface button : buttons)
             button.update(this);
 
@@ -80,17 +86,45 @@ public class Tank {
     }//update
 
     public void updateXY(double increaseX, double increaseY) {
-        x += increaseX;
-        y += increaseY;
+        Rect rect = new Rect((int) (x - hull.getWidth()/2 + increaseX), (int) (y - hull.getHeight()/2 + increaseY),
+                (int) (x+ increaseX + hull.getWidth()/2), (int) (y+ increaseY + hull.getHeight()/2));
+
+        boolean rX = false, rY = false;
+        if (!battleGroundFactory.isCollision(rect)) {
+            if (increaseX > 0 && x + increaseX > screenX * 6 / 7f) {
+                rX = battleGroundFactory.update(-increaseX, 0)[0];
+            } else if (increaseX < 0 && x + increaseX < screenX / 7f ) {
+                rX = battleGroundFactory.update(-increaseX, 0)[0];
+            }
+            if (!rX) {
+                x += increaseX;
+            }
+
+            if (increaseY > 0 && y + increaseY > screenY * 4 / 5f) {
+                rY = battleGroundFactory.update(0, -increaseY)[1];
+            } else if (increaseY < 0 && y + increaseY < screenY / 5f ) {
+                rY = battleGroundFactory.update(0, -increaseY)[1];
+            }
+            if (!rY) {
+                y += increaseY;
+            }
+        }
+
     }//updateXY
 
     public void updateAngle(double increaseAngle) {
-        angle += increaseAngle;
-        if (angle >= 360) {
-            angle -= 360;
-        }else if (angle <= -360) {
-            angle += 360;
+        hull.updateWidthHeight(angle + increaseAngle);
+        Rect rect = new Rect((int) (x - hull.getWidth()/2), (int) (y - hull.getHeight()/2),
+                (int) (x + hull.getWidth()/2), (int) (y+ hull.getHeight()/2));
+        if (!battleGroundFactory.isCollision(rect)) {
+            angle += increaseAngle;
+            if (angle >= 360) {
+                angle -= 360;
+            }else if (angle <= 0) {
+                angle += 360;
+            }
         }
+
     }//updateAngle
 
     private void updateTankObjects() {

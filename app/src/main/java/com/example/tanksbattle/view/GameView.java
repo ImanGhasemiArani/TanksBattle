@@ -15,6 +15,8 @@ import android.view.SurfaceView;
 import androidx.core.view.MotionEventCompat;
 
 import com.example.tanksbattle.R;
+import com.example.tanksbattle.factory.BackgroundFactory;
+import com.example.tanksbattle.factory.BattleGroundFactory;
 import com.example.tanksbattle.model.tank.Tank;
 import com.example.tanksbattle.model.touchbutton.Button;
 import com.example.tanksbattle.model.touchbutton.DownButton;
@@ -28,13 +30,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread gameThread;
     private boolean isPlaying;
     private final Paint paint;
-//    private final Joystick joystick;
     private final Button buttons[];
-//    private final UpButton upButton;
-//    private final DownButton downButton;
-//    private final RightButton rightButton;
-//    private final LeftButton leftButton;
-    private Bitmap fixBackground;
+    private BattleGroundFactory battleGroundFactory;
     private Tank playerTank;
 
     public GameView(Context context) {
@@ -42,17 +39,15 @@ public class GameView extends SurfaceView implements Runnable {
 
         paint = new Paint();
 
-        //define the joystick
-//        joystick = new Joystick(screenX / 5 , screenY / 4 * 3, screenX / 15, screenX / 40);
+        battleGroundFactory = new BattleGroundFactory(getResources());
+
         buttons = new Button[4];
         buttons[0] = new UpButton(screenX / 9, screenY / 6*3, getResources());
         buttons[1] = new DownButton(screenX / 9, screenY / 6*3 + screenY / 5, getResources());
         buttons[2] = new RightButton(screenX / 7 * 5 + screenX / 9, screenY / 6*3 + screenY / 5, getResources());
         buttons[3] = new LeftButton(screenX / 7 * 5, screenY / 6*3 + screenY / 5, getResources());
 
-        setFixBackground();
-
-        playerTank = new Tank(screenX/2, screenY/2, getResources(), buttons);
+        playerTank = new Tank(screenX/2, screenY/2, getResources(), battleGroundFactory);
 
 
     }//Constructor method
@@ -68,10 +63,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
 
-        playerTank.update();
-
-        //update joystick
-//        joystick.update();
+        playerTank.update(buttons);
 
     }//update
 
@@ -79,12 +71,11 @@ public class GameView extends SurfaceView implements Runnable {
         if (getHolder().getSurface().isValid()) {
             Canvas canvas= getHolder().lockCanvas();
 
-            canvas.drawBitmap(fixBackground, 0, 0, paint);
+            battleGroundFactory.draw(canvas, paint);
 
             playerTank.draw(canvas, paint);
 
             //draw joystick
-//            joystick.draw(canvas);
             for (Button button : buttons)
                 button.draw(canvas, paint);
 
@@ -114,32 +105,6 @@ public class GameView extends SurfaceView implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }//resume
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                if (joystick.isPressed(event.getX(), event.getY())) {
-//                    joystick.setIsPressed(true);
-////                    player.setIsWalking(true);
-//                }//if
-//                break;
-//            //case
-//            case MotionEvent.ACTION_MOVE:
-//                if (joystick.getIsPressed()) {
-//                    joystick.setActuator(event.getX(), event.getY());
-//                }//if
-//                break;
-//            //case
-//            case MotionEvent.ACTION_UP:
-//                joystick.setIsPressed(false);
-//                joystick.resetActuator();
-////                player.setIsWalking(false);
-//                break;
-//            //case
-//        }//switch
-//        return true;
-//    }//onTouchEvent
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -182,12 +147,6 @@ public class GameView extends SurfaceView implements Runnable {
         return true;
     }//onTouchEvent
 
-
-
-    private void setFixBackground() {
-        fixBackground = BitmapFactory.decodeResource(getResources(), R.drawable.battleground);
-        fixBackground = Bitmap.createScaledBitmap(fixBackground, screenX, screenY, false);
-    }
 }//GameView
 
 
