@@ -1,11 +1,11 @@
 package com.example.tanksbattle.fragment;
 
-import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +20,14 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        view.findViewById(R.id.startGameButton).setOnClickListener(e->{
+        view.findViewById(R.id.btnMultiplayer).setOnClickListener(e->{
             GameFragment gameFragment = new GameFragment();
             FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frame_holder, gameFragment);
             fragmentTransaction.commit();
         });
+
 
         return view;
     }//onCreateView
