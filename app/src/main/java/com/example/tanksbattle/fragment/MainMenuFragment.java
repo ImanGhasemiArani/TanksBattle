@@ -10,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.tanksbattle.R;
 import com.example.tanksbattle.activity.MainActivity;
 
 public class MainMenuFragment extends Fragment {
 
-    View view;
+    private View view;
     private Button btnMultiplayer, btnSinglePlayer, btnStore, btnSetting;
 
     @Override
@@ -39,12 +40,25 @@ public class MainMenuFragment extends Fragment {
 
     private void implementListeners() {
         btnMultiplayer.setOnClickListener(e->{
-            LoadingFragment loadingFragment = new LoadingFragment();
+            MultiplayerMenuFragment multiplayerMenuFragment = new MultiplayerMenuFragment();
             FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame_holder, loadingFragment);
+            fragmentTransaction.replace(R.id.frame_holder, multiplayerMenuFragment);
             fragmentTransaction.commit();
         });
+
+        btnSinglePlayer.setOnClickListener(e->{
+            Toast.makeText(getContext(), "Single player mode will be creating in next update.", Toast.LENGTH_SHORT).show();
+        });
+
+        btnStore.setOnClickListener(e->{
+            Toast.makeText(getContext(), "Store will be creating in next update.", Toast.LENGTH_SHORT).show();
+        });
+
+        btnSetting.setOnClickListener(e->{
+            Toast.makeText(getContext(), "Setting will be creating in next update.", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
 

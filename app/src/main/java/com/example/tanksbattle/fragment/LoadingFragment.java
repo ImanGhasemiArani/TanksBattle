@@ -27,12 +27,12 @@ public class LoadingFragment extends Fragment {
         pbLoading = view.findViewById(R.id.pbLoading);
 //        pbLoading.setProgress(0);
 
-        new CreateGame().start();
+        new LoadGame().start();
 
         return view;
     }//onCreateView
 
-    private class CreateGame extends Thread {
+    private class LoadGame extends Thread {
 
         @Override
         public void run() {

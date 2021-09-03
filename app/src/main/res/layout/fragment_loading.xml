@@ -10,7 +10,7 @@
         android:id="@+id/loading_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/loading_background2"
+        android:src="@drawable/background_loadong_2"
         android:scaleType="fitXY" />
 
     <ProgressBar
