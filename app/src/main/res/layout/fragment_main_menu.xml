@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="Battle Tanks"
         android:textSize="100dp"
-        android:textColor="@color/brown"
+        android:textColor="@color/gameName"
         android:fontFamily="@font/warmongerbb"
         android:layout_centerHorizontal="true"
         android:layout_alignTop="@id/main_menu_background"
