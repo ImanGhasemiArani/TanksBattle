@@ -9,26 +9,43 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.tanksbattle.R;
 import com.example.tanksbattle.activity.MainActivity;
 
 public class MainMenuFragment extends Fragment {
 
+    View view;
+    private Button btnMultiplayer, btnSinglePlayer, btnStore, btnSetting;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        view.findViewById(R.id.btnMultiplayer).setOnClickListener(e->{
-            GameFragment gameFragment = new GameFragment();
-            FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame_holder, gameFragment);
-            fragmentTransaction.commit();
-        });
+        findViewById();
 
+        implementListeners();
 
         return view;
     }//onCreateView
+
+    private void findViewById() {
+        btnMultiplayer = view.findViewById(R.id.btnMultiplayer);
+        btnSinglePlayer = view.findViewById(R.id.btnSingleplayer);
+        btnStore = view.findViewById(R.id.btnStore);
+        btnSetting = view.findViewById(R.id.btnSetting);
+    }//findViewById
+
+    private void implementListeners() {
+        btnMultiplayer.setOnClickListener(e->{
+            LoadingFragment loadingFragment = new LoadingFragment();
+            FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame_holder, loadingFragment);
+            fragmentTransaction.commit();
+        });
+    }
+
+
 }//MainMenuFragment

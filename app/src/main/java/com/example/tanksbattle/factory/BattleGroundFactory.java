@@ -39,7 +39,7 @@ public class BattleGroundFactory {
         BarbedWire temp = new BarbedWire(0,0,res);
         int width = temp.getWidth();
         int height = temp.getHeight();
-        int counterX = totalX / width;
+        int counterX = totalX / width + 1;
         int counterY = totalY / height - 1;
         for (int x = minX, i = 0; i < counterX; x += width, i++) {
             decorObjects.add(new BarbedWire(x, minY, res));

@@ -34,12 +34,12 @@ public class GameView extends SurfaceView implements Runnable {
     private BattleGroundFactory battleGroundFactory;
     private Tank playerTank;
 
-    public GameView(Context context) {
+    public GameView(Context context, BattleGroundFactory battleGroundFactory) {
         super(context);
 
         paint = new Paint();
 
-        battleGroundFactory = new BattleGroundFactory(getResources());
+        this.battleGroundFactory = battleGroundFactory;
 
         buttons = new Button[4];
         buttons[0] = new UpButton(screenX / 9, screenY / 6*3, getResources());
