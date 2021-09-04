@@ -6,8 +6,6 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
 
-import com.example.tanksbattle.factory.BattleGroundFactory;
-
 import java.io.IOException;
 
 public class Server extends Thread {

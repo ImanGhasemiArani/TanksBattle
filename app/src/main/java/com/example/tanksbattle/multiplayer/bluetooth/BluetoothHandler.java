@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tanksbattle.R;
 import com.example.tanksbattle.activity.MainActivity;
-import com.example.tanksbattle.factory.BattleGroundFactory;
+import com.example.tanksbattle.factory.BattlegroundBaseFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -99,12 +99,12 @@ public class BluetoothHandler {
         serviceClass.start();
     }
 
-    public void sendData(BattleGroundFactory battleGroundFactory) {
+    public void sendData(BattlegroundBaseFactory battleGroundBaseFactory) {
         byte[] buffer;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(battleGroundFactory);
+            objectOutputStream.writeObject(battleGroundBaseFactory);
             objectOutputStream.flush();
             buffer = byteArrayOutputStream.toByteArray();
             sendReceive.write(buffer);
@@ -113,12 +113,12 @@ public class BluetoothHandler {
         }
     }
 
-    public BattleGroundFactory receiveData(byte[] bytes) {
+    public BattlegroundBaseFactory receiveData(byte[] bytes) {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            BattleGroundFactory battleGroundFactory = (BattleGroundFactory) objectInputStream.readObject();
-            return battleGroundFactory;
+            BattlegroundBaseFactory battleGroundBaseFactory = (BattlegroundBaseFactory) objectInputStream.readObject();
+            return battleGroundBaseFactory;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -126,7 +126,7 @@ public class BluetoothHandler {
     }
 
     public void send() {
-        sendData(new BattleGroundFactory(activity.getResources()));
+        sendData(new BattlegroundBaseFactory());
     }
 
 

@@ -12,15 +12,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tanksbattle.R;
 import com.example.tanksbattle.activity.MainActivity;
-import com.example.tanksbattle.factory.BattleGroundFactory;
+import com.example.tanksbattle.factory.BattlegroundBaseFactory;
 
 public class LoadingFragment extends Fragment {
 
     private ProgressBar pbLoading;
-    private BattleGroundFactory battleGroundFactory;
+    private BattlegroundBaseFactory battleGroundBaseFactory;
 
-    public LoadingFragment(BattleGroundFactory battleGroundFactory) {
-        this.battleGroundFactory = battleGroundFactory;
+    public LoadingFragment(BattlegroundBaseFactory battleGroundBaseFactory) {
+        this.battleGroundBaseFactory = battleGroundBaseFactory;
     }
 
     @Override
@@ -45,11 +45,10 @@ public class LoadingFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameFragment gameFragment = new GameFragment();
+            GameFragment gameFragment = new GameFragment(new BattlegroundBaseFactory());
 
             pbLoading.setProgress(50);
 
-            gameFragment.setBattleGroundFactory(battleGroundFactory);
             FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
 
             pbLoading.setProgress(75);

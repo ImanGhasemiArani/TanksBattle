@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.tanksbattle.R;
 import com.example.tanksbattle.activity.MainActivity;
-import com.example.tanksbattle.factory.BattleGroundFactory;
+import com.example.tanksbattle.factory.BattlegroundBaseFactory;
 import com.example.tanksbattle.multiplayer.bluetooth.BluetoothHandler;
 
 public class BluetoothFragment extends Fragment {
@@ -104,9 +104,9 @@ public class BluetoothFragment extends Fragment {
                 tvConnectionStatus.setText("Connection Failed");
                 break;
             case BluetoothHandler.STATE_MESSAGE_RECEIVED:
-                BattleGroundFactory battleGroundFactory = bluetoothHandler.receiveData((byte[]) msg.obj);
+                BattlegroundBaseFactory battleGroundBaseFactory = bluetoothHandler.receiveData((byte[]) msg.obj);
 
-                LoadingFragment loadingFragment = new LoadingFragment(battleGroundFactory);
+                LoadingFragment loadingFragment = new LoadingFragment(battleGroundBaseFactory);
                 FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame_holder, loadingFragment);

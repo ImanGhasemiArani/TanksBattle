@@ -24,7 +24,7 @@ public class BarbedWire implements DecorObjectInterface{
         width = barbedWire.getWidth();
         height = barbedWire.getHeight();
         float wPh = (float)width / (float)height;
-        width = (int) (width / 5 * screenRatioX);
+        width = (int) (width / 4 * screenRatioX);
         height = (int) (width / wPh);
         barbedWire = Bitmap.createScaledBitmap(barbedWire, width, height, false);
     }//Constructor method

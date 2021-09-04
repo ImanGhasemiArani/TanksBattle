@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.example.tanksbattle.model.object.BarbedWire;
 import com.example.tanksbattle.model.object.DecorObjectInterface;
@@ -14,15 +15,15 @@ import com.example.tanksbattle.model.object.DecorObjectInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BattleGroundFactory implements Serializable{
+public class BattleGroundFactory2 implements Serializable{
 
     private final Resources res;
     private int minX, maxX, minY, maxY;
     private final int totalX, totalY;
-    private final BackgroundFactory background;
+    private final BackgroundFactory2 background;
     private final ArrayList<DecorObjectInterface> decorObjects;
 
-    public BattleGroundFactory(Resources res) {
+    public BattleGroundFactory2(Resources res) {
         maxX = (int) (screenX * 1.5);
         maxY = (int) (screenY * 1.5);
         minX = (int) (screenX * 0.5) * -1;
@@ -30,7 +31,7 @@ public class BattleGroundFactory implements Serializable{
         totalX = maxX - minX;
         totalY = maxY - minY;
         this.res = res;
-        background = new BackgroundFactory(minX, maxX, minY, maxY, res);
+        background = new BackgroundFactory2(minX, maxX, minY, maxY, res);
         decorObjects = new ArrayList<>();
 
         setupBarbedWires();
@@ -42,6 +43,7 @@ public class BattleGroundFactory implements Serializable{
         int height = temp.getHeight();
         int counterX = totalX / width + 1;
         int counterY = totalY / height - 1;
+        Log.d("barbedWire", counterX + " " + counterY);
         for (int x = minX, i = 0; i < counterX; x += width, i++) {
             decorObjects.add(new BarbedWire(x, minY, res));
             decorObjects.add(new BarbedWire(x, maxY - height, res));

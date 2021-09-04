@@ -4,8 +4,6 @@ import static com.example.tanksbattle.activity.MainActivity.screenX;
 import static com.example.tanksbattle.activity.MainActivity.screenY;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -14,9 +12,8 @@ import android.view.SurfaceView;
 
 import androidx.core.view.MotionEventCompat;
 
-import com.example.tanksbattle.R;
-import com.example.tanksbattle.factory.BackgroundFactory;
-import com.example.tanksbattle.factory.BattleGroundFactory;
+import com.example.tanksbattle.factory.BattlegroundBaseFactory;
+import com.example.tanksbattle.factory.BattlegroundFactory;
 import com.example.tanksbattle.model.tank.Tank;
 import com.example.tanksbattle.model.touchbutton.Button;
 import com.example.tanksbattle.model.touchbutton.DownButton;
@@ -27,19 +24,20 @@ import com.example.tanksbattle.model.touchbutton.UpButton;
 
 public class GameView extends SurfaceView implements Runnable {
 
+    private BattlegroundBaseFactory battleGroundBaseFactory;
     private Thread gameThread;
     private boolean isPlaying;
     private final Paint paint;
     private final Button buttons[];
-    private BattleGroundFactory battleGroundFactory;
+    private BattlegroundFactory battlegroundFactory;
     private Tank playerTank;
 
-    public GameView(Context context, BattleGroundFactory battleGroundFactory) {
+    public GameView(Context context, BattlegroundBaseFactory battleGroundBaseFactory) {
         super(context);
 
         paint = new Paint();
 
-        this.battleGroundFactory = battleGroundFactory;
+        battlegroundFactory = new BattlegroundFactory(getResources(), battleGroundBaseFactory);
 
         buttons = new Button[4];
         buttons[0] = new UpButton(screenX / 9, screenY / 6*3, getResources());
@@ -47,7 +45,7 @@ public class GameView extends SurfaceView implements Runnable {
         buttons[2] = new RightButton(screenX / 7 * 5 + screenX / 9, screenY / 6*3 + screenY / 5, getResources());
         buttons[3] = new LeftButton(screenX / 7 * 5, screenY / 6*3 + screenY / 5, getResources());
 
-        playerTank = new Tank(screenX/2, screenY/2, getResources(), battleGroundFactory);
+        playerTank = new Tank(battleGroundBaseFactory.getxPTank(), battleGroundBaseFactory.getyPTank(), getResources(), battlegroundFactory);
 
 
     }//Constructor method
@@ -71,7 +69,7 @@ public class GameView extends SurfaceView implements Runnable {
         if (getHolder().getSurface().isValid()) {
             Canvas canvas= getHolder().lockCanvas();
 
-            battleGroundFactory.draw(canvas, paint);
+            battlegroundFactory.draw(canvas, paint);
 
             playerTank.draw(canvas, paint);
 

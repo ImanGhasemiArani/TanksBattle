@@ -10,8 +10,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.example.tanksbattle.factory.BackgroundFactory;
-import com.example.tanksbattle.factory.BattleGroundFactory;
+import com.example.tanksbattle.factory.BattleGroundFactory2;
+import com.example.tanksbattle.factory.BattlegroundFactory;
 import com.example.tanksbattle.image.Image;
 import com.example.tanksbattle.model.tankobject.MovingFire;
 import com.example.tanksbattle.model.tankobject.Tire;
@@ -38,15 +38,15 @@ public class Tank {
     private int gunRotating;
     private boolean isShooting;
 
-    private BattleGroundFactory battleGroundFactory;
+    private BattlegroundFactory battlegroundFactory;
 
-    public Tank(int x, int y, Resources res, BattleGroundFactory battleGroundFactory) {
-        this.battleGroundFactory = battleGroundFactory;
+    public Tank(int x, int y, Resources res, BattlegroundFactory battlegroundFactory) {
+        this.battlegroundFactory = battlegroundFactory;
         this.res = res;
         this.x = x;
         this.y = y;
         angle = gunAngle = 0;
-        maxSpeed = 10;
+        maxSpeed = 15;
         gunRotating = 0;
         isShooting = false;
 
@@ -90,20 +90,20 @@ public class Tank {
                 (int) (x+ increaseX + hull.getWidth()/2), (int) (y+ increaseY + hull.getHeight()/2));
 
         boolean rX = false, rY = false;
-        if (!battleGroundFactory.isCollision(rect)) {
+        if (!battlegroundFactory.isCollision(rect)) {
             if (increaseX > 0 && x + increaseX > screenX * 6 / 7f) {
-                rX = battleGroundFactory.update(-increaseX, 0)[0];
+                rX = battlegroundFactory.update(-increaseX, 0)[0];
             } else if (increaseX < 0 && x + increaseX < screenX / 7f ) {
-                rX = battleGroundFactory.update(-increaseX, 0)[0];
+                rX = battlegroundFactory.update(-increaseX, 0)[0];
             }
             if (!rX) {
                 x += increaseX;
             }
 
             if (increaseY > 0 && y + increaseY > screenY * 4 / 5f) {
-                rY = battleGroundFactory.update(0, -increaseY)[1];
+                rY = battlegroundFactory.update(0, -increaseY)[1];
             } else if (increaseY < 0 && y + increaseY < screenY / 5f ) {
-                rY = battleGroundFactory.update(0, -increaseY)[1];
+                rY = battlegroundFactory.update(0, -increaseY)[1];
             }
             if (!rY) {
                 y += increaseY;
@@ -116,7 +116,7 @@ public class Tank {
         hull.updateWidthHeight(angle + increaseAngle);
         Rect rect = new Rect((int) (x - hull.getWidth()/2), (int) (y - hull.getHeight()/2),
                 (int) (x + hull.getWidth()/2), (int) (y+ hull.getHeight()/2));
-        if (!battleGroundFactory.isCollision(rect)) {
+        if (!battlegroundFactory.isCollision(rect)) {
             angle += increaseAngle;
             if (angle >= 360) {
                 angle -= 360;
