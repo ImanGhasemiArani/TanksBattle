@@ -11,9 +11,10 @@ import android.graphics.Rect;
 import com.example.tanksbattle.model.object.BarbedWire;
 import com.example.tanksbattle.model.object.DecorObjectInterface;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BattleGroundFactory {
+public class BattleGroundFactory implements Serializable{
 
     private final Resources res;
     private int minX, maxX, minY, maxY;

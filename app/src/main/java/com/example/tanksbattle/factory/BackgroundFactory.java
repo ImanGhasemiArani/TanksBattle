@@ -12,10 +12,11 @@ import android.graphics.Paint;
 
 import com.example.tanksbattle.image.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BackgroundFactory {
+public class BackgroundFactory implements Serializable {
 
     private Bitmap[] grounds;
     private int x, y, counterX, counterY;

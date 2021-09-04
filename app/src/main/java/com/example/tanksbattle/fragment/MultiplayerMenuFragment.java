@@ -1,11 +1,9 @@
 package com.example.tanksbattle.fragment;
 
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.transition.TransitionInflater;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,7 +48,11 @@ public class MultiplayerMenuFragment extends Fragment {
         });
 
         btnViaBluetooth.setOnClickListener(e->{
-            Toast.makeText(getContext(), "Bluetooth mode will be creating in next update.", Toast.LENGTH_SHORT).show();
+            BluetoothFragment bluetoothFragment = new BluetoothFragment();
+            FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame_holder, bluetoothFragment);
+            fragmentTransaction.commit();
         });
 
         btnViaHotspot.setOnClickListener(e->{

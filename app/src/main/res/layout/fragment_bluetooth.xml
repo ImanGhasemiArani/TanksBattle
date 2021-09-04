@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".fragment.MultiplayerMenuFragment"
-android:orientation="horizontal">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.BluetoothFragment"
+    android:orientation="horizontal">
 
     <ImageView
         android:layout_width="match_parent"
@@ -18,24 +18,21 @@ android:orientation="horizontal">
         android:id="@+id/gameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
-        android:fontFamily="@font/battleground"
-        android:text="Multiplayer"
+        android:text="Multiplayer\nvia Bluetooth"
+        android:textSize="60dp"
         android:gravity="center"
         android:textColor="@color/gameName"
-        android:textSize="60dp" />
+        android:fontFamily="@font/battleground"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="50dp"/>
 
 
     <Button
-        android:id="@+id/btnMultiplayerViaBluetooth"
+        android:id="@+id/btnCreateServer"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/button"
-        android:text="via Bluetooth"
+        android:text="Create Server"
         android:textSize="20dp"
         android:textColor="@color/white"
         android:fontFamily="@font/battleground"
@@ -45,31 +42,18 @@ android:orientation="horizontal">
 
 
     <Button
-        android:id="@+id/btnMultiplayerViaHotSpot"
+        android:id="@+id/btnJoinServer"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/button"
-        android:text="via Hotspot"
+        android:text="Join Server"
         android:textSize="20dp"
         android:textColor="@color/white"
         android:fontFamily="@font/battleground"
-        android:layout_below="@id/btnMultiplayerViaBluetooth"
+        android:layout_below="@id/btnCreateServer"
         android:layout_marginTop="30dp"
         android:layout_marginStart="30dp"/>
 
-
-    <Button
-        android:id="@+id/btnMultiplayerViaInternet"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:background="@drawable/button"
-        android:text="via Internet"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/battleground"
-        android:layout_below="@id/btnMultiplayerViaHotSpot"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"/>
 
     <Button
         android:id="@+id/btnBack"
@@ -78,6 +62,26 @@ android:orientation="horizontal">
         android:background="@drawable/ic_baseline_arrow_back_ios_24"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"/>
+
+    <ListView
+        android:id="@+id/lvDevices"
+        android:layout_width="300dp"
+        android:layout_height="10dp"
+        android:layout_alignBottom="@id/multiplayer_menu_background"
+        android:layout_below="@id/btnJoinServer"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/tvConnectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="not Connected"
+        android:textSize="15dp"
+        android:textColor="@color/gray"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"/>
 
 
 </RelativeLayout>
