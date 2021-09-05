@@ -52,6 +52,7 @@ public class Server extends Thread {
                 handler.sendMessage(msg);
 
                 sendReceive = new SendReceive(socket, handler);
+                bluetoothHandler.setSendReceive(sendReceive);
                 sendReceive.start();
                 bluetoothHandler.send();
             }

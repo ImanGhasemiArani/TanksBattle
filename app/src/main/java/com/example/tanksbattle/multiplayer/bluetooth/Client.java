@@ -9,12 +9,14 @@ import java.io.IOException;
 
 public class Client extends Thread {
 
+    private BluetoothHandler bluetoothHandler;
     private Handler handler;
     private BluetoothDevice device;
     private BluetoothSocket socket;
     private SendReceive sendReceive;
 
-    public Client(BluetoothDevice device, Handler handler, SendReceive sendReceive) {
+    public Client(BluetoothDevice device, Handler handler, SendReceive sendReceive, BluetoothHandler bluetoothHandler) {
+        this.bluetoothHandler = bluetoothHandler;
         this.sendReceive = sendReceive;
         this.handler = handler;
         this.device = device;
@@ -34,6 +36,7 @@ public class Client extends Thread {
             handler.sendMessage(msg);
 
             sendReceive = new SendReceive(socket, handler);
+            bluetoothHandler.setSendReceive(sendReceive);
             sendReceive.start();
         } catch (IOException e) {
             e.printStackTrace();

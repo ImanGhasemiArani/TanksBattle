@@ -2,10 +2,13 @@ package com.example.tanksbattle.multiplayer.bluetooth;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class SendReceive extends Thread {
 
@@ -33,15 +36,16 @@ public class SendReceive extends Thread {
 
     @Override
     public void run() {
-        byte[] buffer = new byte[1024];
-        int bytes = 1024;
+        byte[] buffer = new byte[20480];
+        int bytes;
 
         while (true) {
             try {
-                inputStream.read(buffer);
+                bytes = inputStream.read(buffer);
                 handler.obtainMessage(BluetoothHandler.STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 e.printStackTrace();
+                break;
             }
         }
     }

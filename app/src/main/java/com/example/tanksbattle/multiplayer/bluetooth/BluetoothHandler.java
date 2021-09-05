@@ -87,7 +87,7 @@ public class BluetoothHandler {
     }
 
     public void createClient(BluetoothDevice device) {
-        Client client = new Client(device, handler, sendReceive);
+        Client client = new Client(device, handler, sendReceive, this);
         client.start();
         Message msg = Message.obtain();
         msg.what = STATE_CONNECTING;
@@ -117,8 +117,8 @@ public class BluetoothHandler {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            BattlegroundBaseFactory battleGroundBaseFactory = (BattlegroundBaseFactory) objectInputStream.readObject();
-            return battleGroundBaseFactory;
+            BattlegroundBaseFactory battlegroundBaseFactory = (BattlegroundBaseFactory) objectInputStream.readObject();
+            return battlegroundBaseFactory;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -129,7 +129,7 @@ public class BluetoothHandler {
         sendData(new BattlegroundBaseFactory());
     }
 
-
-
-
+    public void setSendReceive(SendReceive sendReceive) {
+        this.sendReceive = sendReceive;
+    }
 }
