@@ -45,7 +45,7 @@ public class LoadingFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            GameFragment gameFragment = new GameFragment(new BattlegroundBaseFactory());
+            GameFragment gameFragment = new GameFragment(battleGroundBaseFactory);
 
             pbLoading.setProgress(50);
 

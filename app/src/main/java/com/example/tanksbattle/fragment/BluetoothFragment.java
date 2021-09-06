@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,8 @@ public class BluetoothFragment extends Fragment {
 
     private BluetoothHandler bluetoothHandler;
     private BluetoothDevice[] devices;
+
+    private BattlegroundBaseFactory battlegroundBaseFactory;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,13 +106,19 @@ public class BluetoothFragment extends Fragment {
                 tvConnectionStatus.setText("Connection Failed");
                 break;
             case BluetoothHandler.STATE_MESSAGE_RECEIVED:
-                BattlegroundBaseFactory battleGroundBaseFactory = bluetoothHandler.receiveData((byte[]) msg.obj);
+                BattlegroundBaseFactory temp = bluetoothHandler.receiveData((byte[]) msg.obj, msg.arg1);
+                if (temp != null) {
+                    battlegroundBaseFactory = temp;
+                    LoadingFragment loadingFragment = new LoadingFragment(battlegroundBaseFactory);
+                    FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_holder, loadingFragment);
+                    fragmentTransaction.commit();
+                }else {
+                    System.out.println("null");
+                }
 
-                LoadingFragment loadingFragment = new LoadingFragment(battleGroundBaseFactory);
-                FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame_holder, loadingFragment);
-                fragmentTransaction.commit();
+
 
                 break;
         }

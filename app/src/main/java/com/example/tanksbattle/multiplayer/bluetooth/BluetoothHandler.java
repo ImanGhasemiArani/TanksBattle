@@ -18,6 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,6 +26,9 @@ public class BluetoothHandler {
 
     private final AppCompatActivity activity;
     private final Handler handler;
+
+    private byte[] receivedData = null;
+    private int index;
 
     private final BluetoothAdapter myBluetoothAdapter;
     private BluetoothDevice[] devices;
@@ -99,34 +103,60 @@ public class BluetoothHandler {
         serviceClass.start();
     }
 
-    public void sendData(BattlegroundBaseFactory battleGroundBaseFactory) {
+    public void sendData(BattlegroundBaseFactory battlegroundBaseFactory) {
         byte[] buffer;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = null;
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(battleGroundBaseFactory);
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(battlegroundBaseFactory);
             objectOutputStream.flush();
             buffer = byteArrayOutputStream.toByteArray();
             sendReceive.write(buffer);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        finally {
+            try {
+                Objects.requireNonNull(objectOutputStream).close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public BattlegroundBaseFactory receiveData(byte[] bytes) {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+    public BattlegroundBaseFactory receiveData(byte[] bytes, int arg1) {
+        if (receivedData == null) {
+            receivedData = new byte[10240];
+            index = 0;
+        }
+        System.arraycopy(bytes, 0, receivedData, index, bytes.length);
+        index += arg1;
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(receivedData);
+        ObjectInputStream objectInputStream = null;
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            BattlegroundBaseFactory battlegroundBaseFactory = (BattlegroundBaseFactory) objectInputStream.readObject();
-            return battlegroundBaseFactory;
+            objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            BattlegroundBaseFactory arr = (BattlegroundBaseFactory) objectInputStream.readObject();
+
+            return arr;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            System.out.println("&&&&&&&&&&&&&&&&&&&"+index+"&&&&&&&&&&&&&&&&&&&&&&&&&&77777");
+        }finally {
+            try {
+                Objects.requireNonNull(objectInputStream).close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     public void send() {
-        sendData(new BattlegroundBaseFactory());
+        BattlegroundBaseFactory battlegroundBaseFactory = new BattlegroundBaseFactory();
+        sendData(battlegroundBaseFactory);
     }
 
     public void setSendReceive(SendReceive sendReceive) {

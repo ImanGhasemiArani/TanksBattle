@@ -36,12 +36,13 @@ public class SendReceive extends Thread {
 
     @Override
     public void run() {
-        byte[] buffer = new byte[20480];
+        byte[] buffer = new byte[1024];
         int bytes;
 
         while (true) {
             try {
                 bytes = inputStream.read(buffer);
+                System.out.println("OK###################"+bytes+"#####################");
                 handler.obtainMessage(BluetoothHandler.STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -51,6 +52,7 @@ public class SendReceive extends Thread {
     }
 
     public void write(byte[] bytes) {
+        System.out.println(bytes.length);
         try {
             outputStream.write(bytes);
         } catch (IOException e) {

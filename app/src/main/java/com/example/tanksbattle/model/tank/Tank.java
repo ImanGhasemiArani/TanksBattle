@@ -10,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.example.tanksbattle.factory.BattleGroundFactory2;
 import com.example.tanksbattle.factory.BattlegroundFactory;
 import com.example.tanksbattle.image.Image;
 import com.example.tanksbattle.model.tankobject.MovingFire;

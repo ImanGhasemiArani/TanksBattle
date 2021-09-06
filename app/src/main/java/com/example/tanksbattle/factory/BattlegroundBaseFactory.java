@@ -22,6 +22,10 @@ public class BattlegroundBaseFactory implements Serializable {
         generateTank();
     }
 
+    public BattlegroundBaseFactory(String str) {
+        importData(str);
+    }
+
     private void generateTank() {
         xPTank = 100;
         yPTank = 100;
@@ -64,5 +68,46 @@ public class BattlegroundBaseFactory implements Serializable {
 
     public int getyPTank() {
         return yPTank;
+    }
+
+    @Override
+    public String toString() {
+        String str = "start\n";
+
+        str += backgroundBlocks.length + " " + backgroundBlocks[0].length + " #\n";
+        for (int i = 0; i < backgroundBlocks.length; i++) {
+            for (int j = 0; j < backgroundBlocks[0].length; j++) {
+                str += backgroundBlocks[i][j] + " ";
+            }
+            str += "\n";
+        }
+        str += "#";
+
+        str += barbedWires.length + " " + barbedWires[0].length + " #\n";
+        for (int i = 0; i < barbedWires.length; i++) {
+            for (int j = 0; j < barbedWires[0].length; j++) {
+                str += barbedWires[i][j] + " ";
+            }
+            str += "\n";
+        }
+        str += "#";
+
+        str += xPTank + " " + yPTank + "#";
+        str += " end";
+
+        return str;
+    }
+
+    private void importData(String str) {
+
+        str = str.substring(6, str.length() - 3);
+
+//        String[] lines = str.split("#");
+        System.out.println("###############################");
+        System.out.println(str);
+        System.out.println("###############################");
+
+
+
     }
 }
