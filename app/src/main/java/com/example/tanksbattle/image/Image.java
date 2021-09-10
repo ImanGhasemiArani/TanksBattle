@@ -5,11 +5,17 @@ import com.example.tanksbattle.R;
 public class Image {
 
     public final static int[] TANK_TRACK_A= new int[] {
-            R.drawable.track_0_a
+            R.drawable.track_0_a,
+            R.drawable.track_1_a,
+            R.drawable.track_2_a,
+            R.drawable.track_3_a
     };
 
     public final static int[] TANK_TRACK_B= new int[] {
-            R.drawable.track_0_b
+            R.drawable.track_0_b,
+            R.drawable.track_1_b,
+            R.drawable.track_2_b,
+            R.drawable.track_3_b
     };
 
     public final static int[] TANK_HULL= new int[] {

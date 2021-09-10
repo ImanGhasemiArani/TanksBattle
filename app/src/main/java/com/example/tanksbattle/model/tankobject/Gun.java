@@ -36,11 +36,11 @@ public class Gun {
     public void update(double updateX, double updateY,double angle, double gunAngle) {
 
         matrix = new Matrix();
-        matrix.postTranslate(-gun.getWidth()/2f, -gun.getHeight()*4.5f/6f);
+        matrix.postTranslate(-gun.getWidth()/2f, -gun.getHeight()*2.4f/4f);
         matrix.postRotate((float) gunAngle);
 
 
-        matrix.postTranslate(0, gun.getHeight()*4.5f/6f - gun.getHeight()/2f);
+        matrix.postTranslate(0, gun.getHeight()*2.4f/4f - gun.getHeight()/2f);
         matrix.postRotate((float) angle);
         x = updateX;
         y = updateY;

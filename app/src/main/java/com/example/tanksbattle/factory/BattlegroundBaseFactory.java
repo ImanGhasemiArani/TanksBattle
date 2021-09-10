@@ -1,5 +1,7 @@
 package com.example.tanksbattle.factory;
 
+import static com.example.tanksbattle.activity.MainActivity.screenX;
+import static com.example.tanksbattle.activity.MainActivity.screenY;
 import static com.example.tanksbattle.constant.ConstantData.X_COUNTER_OF_BLOCK_BACKGROUND;
 import static com.example.tanksbattle.constant.ConstantData.Y_COUNTER_OF_BLOCK_BACKGROUND;
 
@@ -22,8 +24,8 @@ public class BattlegroundBaseFactory implements Serializable {
     }
 
     private void generateTank() {
-        xPTank = 100;
-        yPTank = 100;
+        xPTank = screenX/2;
+        yPTank = screenY/2;
     }
 
     private void generateBarbedWiresData() {
