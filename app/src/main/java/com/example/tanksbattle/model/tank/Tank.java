@@ -4,6 +4,12 @@ import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
 import static com.example.tanksbattle.activity.MainActivity.screenRatioY;
 import static com.example.tanksbattle.activity.MainActivity.screenX;
 import static com.example.tanksbattle.activity.MainActivity.screenY;
+import static com.example.tanksbattle.constant.ConstantData.currentGun;
+import static com.example.tanksbattle.constant.ConstantData.currentHull;
+import static com.example.tanksbattle.constant.ConstantData.currentMovingFire;
+import static com.example.tanksbattle.constant.ConstantData.currentTire;
+import static com.example.tanksbattle.constant.ConstantData.currentTrackA;
+import static com.example.tanksbattle.constant.ConstantData.currentTrackB;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -49,23 +55,23 @@ public class Tank {
         gunRotating = 0;
         isShooting = false;
 
-        hull = new Hull(this, Image.TANK_HULL[0], x, y, res);
+        hull = new Hull(this, currentHull, x, y, res);
 
-        gun = new Gun(Image.TANK_GUN[1], x, y, res);
+        gun = new Gun(currentGun, x, y, res);
         gun.setSwap(height/5f);
 
-        rightTrack = new Track(Image.TANK_TRACK_A[0], Image.TANK_TRACK_B[0], x, y, res);
+        rightTrack = new Track(currentTrackA, currentTrackB, x, y, res);
         rightTrack.setSwap(width/2f-rightTrack.getWidth()*2/3f, -height/2f);
-        leftTrack = new Track(Image.TANK_TRACK_A[0], Image.TANK_TRACK_B[0], x, y, res);
+        leftTrack = new Track(currentTrackA, currentTrackB, x, y, res);
         leftTrack.setSwap(-width/2f-leftTrack.getWidth()/3f, -height/2f);
 
-        rightTire = new Tire(Image.TANK_TIRE[0], x, y, res);
-        leftTire = new Tire(Image.TANK_TIRE[0], x, y, res);
+        rightTire = new Tire(currentTire, x, y, res);
+        leftTire = new Tire(currentTire, x, y, res);
         setSwapTiresUp();
 
-        rightMovingFire = new MovingFire(Image.OTHER_OBJECTS[0], x, y, res);
+        rightMovingFire = new MovingFire(currentMovingFire, x, y, res);
         rightMovingFire.setSwap(rightMovingFire.getWidth()/3f, height/2f);
-        leftMovingFire = new MovingFire(Image.OTHER_OBJECTS[0], x, y, res);
+        leftMovingFire = new MovingFire(currentMovingFire, x, y, res);
         leftMovingFire.setSwap(-leftMovingFire.getWidth()*4/3f, height/2f);
 
 
@@ -142,6 +148,8 @@ public class Tank {
     }//updateTankObjects
 
     public void draw(Canvas canvas, Paint paint) {
+        rightMovingFire.draw(canvas, paint);
+        leftMovingFire.draw(canvas, paint);
 
         rightTire.draw(canvas, paint);
         leftTire.draw(canvas, paint);
@@ -153,8 +161,6 @@ public class Tank {
 
         gun.draw(canvas,paint);
 
-        rightMovingFire.draw(canvas, paint);
-        leftMovingFire.draw(canvas, paint);
     }//draw
 
     public int getMaxSpeed() {

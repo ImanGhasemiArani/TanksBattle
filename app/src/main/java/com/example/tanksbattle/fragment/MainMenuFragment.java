@@ -49,7 +49,11 @@ public class MainMenuFragment extends Fragment {
         });
 
         btnSinglePlayer.setOnClickListener(e->{
-            Toast.makeText(getContext(), "Single player mode will be creating in next update.", Toast.LENGTH_SHORT).show();
+            GameFragment gameFragment = new GameFragment(new BattlegroundBaseFactory());
+            FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame_holder, gameFragment);
+            fragmentTransaction.commit();
         });
 
         btnStore.setOnClickListener(e->{
