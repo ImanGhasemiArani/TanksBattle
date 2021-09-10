@@ -48,11 +48,12 @@ public class MultiplayerMenuFragment extends Fragment {
         });
 
         btnViaBluetooth.setOnClickListener(e->{
-            BluetoothFragment bluetoothFragment = new BluetoothFragment();
-            FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame_holder, bluetoothFragment);
-            fragmentTransaction.commit();
+            Toast.makeText(getContext(), "Bluetooth mode will be creating in next update.", Toast.LENGTH_SHORT).show();
+//            BluetoothFragment bluetoothFragment = new BluetoothFragment();
+//            FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.frame_holder, bluetoothFragment);
+//            fragmentTransaction.commit();
         });
 
         btnViaHotspot.setOnClickListener(e->{

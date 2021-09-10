@@ -126,6 +126,10 @@ public class BluetoothHandler {
         }
     }
 
+    public void sendData(String str) {
+        sendReceive.write(str.getBytes());
+    }
+
     public BattlegroundBaseFactory receiveData(byte[] bytes, int arg1) {
         if (receivedData == null) {
             receivedData = new byte[10240];
@@ -154,9 +158,13 @@ public class BluetoothHandler {
         return null;
     }
 
+    public String receiveDataString(byte[] bytes, int arg1) {
+        return new String(bytes, 0, arg1);
+    }
+
     public void send() {
         BattlegroundBaseFactory battlegroundBaseFactory = new BattlegroundBaseFactory();
-        sendData(battlegroundBaseFactory);
+        sendData(battlegroundBaseFactory.toString());
     }
 
     public void setSendReceive(SendReceive sendReceive) {

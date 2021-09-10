@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,11 +84,6 @@ public class BluetoothFragment extends Fragment {
 
         lvDevices.setOnItemClickListener((adapterView, view, i, l) -> bluetoothHandler.createClient(devices[i]));
 
-//        btnBack.setOnClickListener(e->{
-//            String str = String.valueOf(editText.getText());
-//            bluetoothHandler.send(str);
-//        });
-
 
     }
 
@@ -106,6 +102,7 @@ public class BluetoothFragment extends Fragment {
                 tvConnectionStatus.setText("Connection Failed");
                 break;
             case BluetoothHandler.STATE_MESSAGE_RECEIVED:
+                battlegroundBaseFactory = bluetoothHandler.receiveData((byte[]) msg.obj, msg.arg1);
                 BattlegroundBaseFactory temp = bluetoothHandler.receiveData((byte[]) msg.obj, msg.arg1);
                 if (temp != null) {
                     battlegroundBaseFactory = temp;
@@ -115,11 +112,8 @@ public class BluetoothFragment extends Fragment {
                     fragmentTransaction.replace(R.id.frame_holder, loadingFragment);
                     fragmentTransaction.commit();
                 }else {
-                    System.out.println("null");
+                    Log.d("receive data", "received null data");
                 }
-
-
-
                 break;
         }
         return false;

@@ -15,15 +15,10 @@ public class BattlegroundBaseFactory implements Serializable {
     private int[][] barbedWires;
     private int xPTank, yPTank;
 
-
     public BattlegroundBaseFactory() {
         generateBackgroundData();
         generateBarbedWiresData();
         generateTank();
-    }
-
-    public BattlegroundBaseFactory(String str) {
-        importData(str);
     }
 
     private void generateTank() {
@@ -62,52 +57,12 @@ public class BattlegroundBaseFactory implements Serializable {
         return barbedWires;
     }
 
-    public int getxPTank() {
+    public int getXPTank() {
         return xPTank;
     }
 
-    public int getyPTank() {
+    public int getYPTank() {
         return yPTank;
     }
 
-    @Override
-    public String toString() {
-        String str = "start\n";
-
-        str += backgroundBlocks.length + " " + backgroundBlocks[0].length + " #\n";
-        for (int i = 0; i < backgroundBlocks.length; i++) {
-            for (int j = 0; j < backgroundBlocks[0].length; j++) {
-                str += backgroundBlocks[i][j] + " ";
-            }
-            str += "\n";
-        }
-        str += "#";
-
-        str += barbedWires.length + " " + barbedWires[0].length + " #\n";
-        for (int i = 0; i < barbedWires.length; i++) {
-            for (int j = 0; j < barbedWires[0].length; j++) {
-                str += barbedWires[i][j] + " ";
-            }
-            str += "\n";
-        }
-        str += "#";
-
-        str += xPTank + " " + yPTank + "#";
-        str += " end";
-
-        return str;
-    }
-
-    private void importData(String str) {
-
-        str = str.substring(6, str.length() - 3);
-
-//        String[] lines = str.split("#");
-        System.out.println("###############################");
-        System.out.println(str);
-        System.out.println("###############################");
-
-
-
-    }
 }
