@@ -1,6 +1,8 @@
 package com.example.tanksbattle.model.tankobject;
 
 import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO_TOTAL;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -23,7 +25,7 @@ public class Tire {
         width = tire.getWidth();
         height = tire.getHeight();
         wPH = (double) width / (double) height;
-        width = (int) (tire.getWidth() / 3 * screenRatioX);
+        width = (int) (tire.getWidth() * IMAGE_RATIO * IMAGE_RATIO_TOTAL * screenRatioX);
         height = (int) (width / wPH);
         tire = Bitmap.createScaledBitmap(tire, width, height, false);
 

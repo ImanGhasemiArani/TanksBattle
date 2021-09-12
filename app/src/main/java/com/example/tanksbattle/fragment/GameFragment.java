@@ -25,7 +25,6 @@ public class GameFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         gameView = new GameView(MainActivity.appCompatActivity, battleGroundBaseFactory);
 
-
         return gameView;
     }//onCreateView
 

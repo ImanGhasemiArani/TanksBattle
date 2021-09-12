@@ -45,7 +45,7 @@ public class GameView extends SurfaceView implements Runnable {
         buttons[2] = new RightButton(screenX / 7 * 5 + screenX / 9, screenY / 6*3 + screenY / 5, getResources());
         buttons[3] = new LeftButton(screenX / 7 * 5, screenY / 6*3 + screenY / 5, getResources());
 
-        playerTank = new Tank(battleGroundBaseFactory.getXPTank(), battleGroundBaseFactory.getYPTank(), getResources(), battlegroundFactory);
+        playerTank = new Tank(battlegroundFactory.getXPTank(), battlegroundFactory.getYPTank(), getResources(), battlegroundFactory);
 
 
     }//Constructor method

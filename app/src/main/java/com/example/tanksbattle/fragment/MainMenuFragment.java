@@ -49,10 +49,10 @@ public class MainMenuFragment extends Fragment {
         });
 
         btnSinglePlayer.setOnClickListener(e->{
-            GameFragment gameFragment = new GameFragment(new BattlegroundBaseFactory());
+            LoadingFragment loadingFragment = new LoadingFragment(new BattlegroundBaseFactory());
             FragmentManager fragmentManager = MainActivity.appCompatActivity.getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frame_holder, gameFragment);
+            fragmentTransaction.replace(R.id.frame_holder, loadingFragment);
             fragmentTransaction.commit();
         });
 

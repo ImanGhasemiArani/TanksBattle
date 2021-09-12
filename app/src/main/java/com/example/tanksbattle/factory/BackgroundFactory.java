@@ -1,6 +1,9 @@
 package com.example.tanksbattle.factory;
 
 import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
+import static com.example.tanksbattle.activity.MainActivity.screenX;
+import static com.example.tanksbattle.activity.MainActivity.screenY;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO_TOTAL;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -25,7 +28,7 @@ public class BackgroundFactory {
         width = grounds[0].getWidth();
         height = grounds[0].getHeight();
         double wPh = (float) width / (float) height;
-        width = (int) (width / 3 * screenRatioX);
+        width = (int) (width * IMAGE_RATIO_TOTAL * screenRatioX);
         height = (int) (width / wPh);
         grounds[0] = Bitmap.createScaledBitmap(grounds[0], width, height, false);
         grounds[1] = Bitmap.createScaledBitmap(grounds[1], width, height, false);
@@ -37,6 +40,9 @@ public class BackgroundFactory {
 
         zeroXP = blocks[0].length / 4 - 1;
         zeroYP = blocks.length / 4 - 1;
+
+        System.out.println(xMin + " " + xMax + " " + yMin + " " + yMax);
+        System.out.println(xMin + " " + (xMax - screenX) + " " + yMin + " " + (yMax - screenY));
 
     }//Constructor method
 
@@ -85,5 +91,31 @@ public class BackgroundFactory {
 
     public int getHeight() {
         return height;
+    }
+
+    public int[] setupPosition(String upDown, String leftRight, int xTank, int yTank) {
+        int xSwap = 0;
+        int ySwap = 0;
+        if (upDown.equals("U")) {
+            ySwap = -yTank + screenY / 4;
+            yMin += ySwap;
+            yMax += ySwap;
+        } else if (upDown.equals("D")) {
+            ySwap = -(yTank - screenY) - screenY / 4;
+            yMin += ySwap;
+            yMax += ySwap;
+        }
+
+        if (leftRight.equals("L")) {
+            xSwap = -xTank + screenX / 4;
+            xMin += xSwap;
+            xMax += xSwap;
+        } else if((leftRight.equals("R"))) {
+            xSwap = -(xTank - screenX) - screenX / 4;
+            xMin += xSwap;
+            xMax += xSwap;
+        }
+
+        return new int[] {xSwap, ySwap};
     }
 }//BackgroundFactory

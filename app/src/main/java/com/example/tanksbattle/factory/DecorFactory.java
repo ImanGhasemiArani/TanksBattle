@@ -4,35 +4,36 @@ import android.content.res.Resources;
 
 import com.example.tanksbattle.constant.ConstantData;
 import com.example.tanksbattle.model.object.BarbedWire;
+import com.example.tanksbattle.model.object.DecorObjectInterface;
 
 import java.util.ArrayList;
 
-public class BarbedWireFactory {
+public class DecorFactory {
 
-    private ArrayList<BarbedWire> barbedWires;
+    private ArrayList<DecorObjectInterface> decors;
     private int[][] barbedWiresData;
     private int width, height;
     private int xMin, yMin;
 
-    public BarbedWireFactory(Resources res, int[][] barbedWiresData, int width, int height, int xMin, int yMin) {
+    public DecorFactory(Resources res, int[][] barbedWiresData, int width, int height, int xMin, int yMin) {
         this.barbedWiresData = barbedWiresData;
         this.width = width;
         this.height = height;
         this.xMin = xMin;
         this.yMin = yMin;
 
-        barbedWires = new ArrayList<>();
+        decors = new ArrayList<>();
 
         for (int i = 0, y = yMin; i < barbedWiresData.length; i++, y += height) {
             for (int j = 0, x = xMin; j < barbedWiresData[0].length; j++, x += width) {
                 if (barbedWiresData[i][j] == ConstantData.BARBED_WIRE) {
-                    barbedWires.add(new BarbedWire(x, y, res));
+                    decors.add(new BarbedWire(x, y, res));
                 }
             }
         }
     }
 
-    public ArrayList<BarbedWire> getBarbedWires() {
-        return barbedWires;
+    public ArrayList<DecorObjectInterface> getDecors() {
+        return decors;
     }
 }

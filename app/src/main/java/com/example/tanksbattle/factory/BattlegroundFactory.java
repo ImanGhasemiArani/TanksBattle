@@ -11,21 +11,78 @@ import android.graphics.Rect;
 import com.example.tanksbattle.model.object.DecorObjectInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 
 public class BattlegroundFactory {
 
     private final Resources res;
     private BackgroundFactory backgroundFactory;
     private ArrayList<DecorObjectInterface> decorObjects;
-    private int xMin, xMax, yMin, yMax, zeroXP, zeroYP, width, height;
+    private int xPTank, yPTank, xMin, xMax, yMin, yMax, zeroXP, zeroYP, width, height;
+    private ArrayList<int[]> path;
 
     public BattlegroundFactory(Resources res, BattlegroundBaseFactory battleGroundBaseFactory) {
         this.res = res;
         backgroundFactory = new BackgroundFactory(res, battleGroundBaseFactory.getBackgroundBlocksData());
         setMinMaxZeroPos();
         decorObjects = new ArrayList<>();
-        BarbedWireFactory barbedWireFactory= new BarbedWireFactory(res, battleGroundBaseFactory.getBarbedWiresData(), width, height, xMin, yMin);
-        decorObjects.addAll(barbedWireFactory.getBarbedWires());
+//        BarbedWireFactory barbedWireFactory= new BarbedWireFactory(res, battleGroundBaseFactory.getBarbedWiresData(), width, height, xMin, yMin);
+//        decorObjects.addAll(barbedWireFactory.getBarbedWires());
+
+        MazeFactory mazeFactory = new MazeFactory(res, battleGroundBaseFactory.getDecorsData(), width, height, xMin, yMin);
+        decorObjects.addAll(mazeFactory.getDecors());
+        path = mazeFactory.getPath();
+
+        generatePositionTank();
+
+        setupFirstPositionOfObjects();
+
+    }
+
+    private void generatePositionTank() {
+        int[] yx = path.get(new Random().nextInt(path.size()));
+        xPTank = yx[1];
+        yPTank = yx[0];
+
+        while (!(xPTank < screenX * 3 / 2 && xPTank > -screenX / 2 &&
+                yPTank < screenY * 3 / 2 && yPTank > -screenY / 2)) {
+            yx = path.get(new Random().nextInt(path.size()));
+            xPTank = yx[1];
+            yPTank = yx[0];
+        }
+
+    }
+
+    private void setupFirstPositionOfObjects() {
+        String upDown = "NON", leftRight = "NON";
+        if (xPTank < 0) {
+            leftRight = "L";
+        } else if (xPTank > screenX) {
+            leftRight = "R";
+        }
+
+        if (yPTank < 0) {
+            upDown = "U";
+        } else if (yPTank > screenY) {
+            upDown = "D";
+        }
+
+        int[] temp = backgroundFactory.setupPosition(upDown, leftRight, xPTank, yPTank);
+        int xSwap = temp[0], ySwap = temp[1];
+
+        System.out.println("\n\nscreens"+screenX + " " + screenY);
+        System.out.println("tank" + xPTank +" " + yPTank);
+        System.out.println("swaps" + xSwap +" " + ySwap);
+        xPTank += xSwap;
+        yPTank += ySwap;
+
+        System.out.println("tank" +xPTank +" " + yPTank);
+
+        for (DecorObjectInterface object : decorObjects) {
+            object.update(xSwap, ySwap);
+        }//for
     }
 
     private void setMinMaxZeroPos() {
@@ -82,4 +139,12 @@ public class BattlegroundFactory {
         }//for
         return false;
     }//isCollision
+
+    public int getXPTank() {
+        return xPTank;
+    }
+
+    public int getYPTank() {
+        return yPTank;
+    }
 }

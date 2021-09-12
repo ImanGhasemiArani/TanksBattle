@@ -27,9 +27,8 @@ public class LoadingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_loading, container, false);
-
         pbLoading = view.findViewById(R.id.pbLoading);
-//        pbLoading.setProgress(0);
+        pbLoading.setProgress(0);
 
         new LoadGame().start();
 

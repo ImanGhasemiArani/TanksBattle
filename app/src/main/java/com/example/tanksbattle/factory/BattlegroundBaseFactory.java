@@ -14,18 +14,35 @@ public class BattlegroundBaseFactory implements Serializable {
 
 
     private int[][] backgroundBlocks;
+    private int[][] decors;
     private int[][] barbedWires;
     private int xPTank, yPTank;
 
     public BattlegroundBaseFactory() {
         generateBackgroundData();
-        generateBarbedWiresData();
+//        generateBarbedWiresData();
+        generateMaze();
         generateTank();
     }
 
+    private void generateMaze() {
+        MazeGenerator mazeGenerator = new MazeGenerator(Y_COUNTER_OF_BLOCK_BACKGROUND, X_COUNTER_OF_BLOCK_BACKGROUND);
+        decors = mazeGenerator.getGrid().clone();
+//        String s = "";
+//        for (int i = 0; i < decors.length; i++) {
+//            for (int j = 0; j < decors[0].length; j++) {
+//                s += decors[i][j];
+//            }
+//            s += "\n";
+//        }
+//        System.out.println(s);
+    }
+
     private void generateTank() {
+
         xPTank = screenX/2;
         yPTank = screenY/2;
+
     }
 
     private void generateBarbedWiresData() {
@@ -57,6 +74,10 @@ public class BattlegroundBaseFactory implements Serializable {
 
     public int[][] getBarbedWiresData() {
         return barbedWires;
+    }
+
+    public int[][] getDecorsData() {
+        return decors;
     }
 
     public int getXPTank() {

@@ -1,6 +1,8 @@
 package com.example.tanksbattle.model.tankobject;
 
 import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO_TOTAL;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -10,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.example.tanksbattle.model.tank.Tank;
 
@@ -27,7 +30,7 @@ public class Hull {
         width = hull.getWidth();
         height = hull.getHeight();
         wPH = (double) width / (double) height;
-        width = (int) (hull.getWidth() / 3 * screenRatioX);
+        width = (int) (hull.getWidth() * IMAGE_RATIO * IMAGE_RATIO_TOTAL * screenRatioX);
         height = (int) (width / wPH);
         chord = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2)) / 2;
         tempAngle = Math.atan((double) width/height);
@@ -53,8 +56,12 @@ public class Hull {
     }//update
 
     public void draw(Canvas canvas, Paint paint) {
+        Rect rect = new Rect((int) (x - width/2), (int) (y - height/2),
+                (int) (x + width/2), (int) (y + height/2));
+        canvas.drawRect(rect, paint);
+
         //draw in canvas
-        canvas.drawBitmap(hull, matrix, paint);
+         canvas.drawBitmap(hull, matrix, paint);
     }//draw
 
     public int getWidth() {

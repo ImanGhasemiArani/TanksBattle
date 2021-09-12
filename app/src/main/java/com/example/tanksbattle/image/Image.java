@@ -54,8 +54,14 @@ public class Image {
             R.drawable.ground_tile_01
     };
 
-    public final static int[] BARBED_WIRE = new int[] {
-            R.drawable.barbed_wire
+    public final static int[] DECORS = new int[] {
+            R.drawable.barbed_wire,
+            R.drawable.barbed_wire_wooden,
+            R.drawable.container_0,
+            R.drawable.container_0_90,
+            R.drawable.container_1,
+            R.drawable.container_2,
+            R.drawable.container_3
     };
 
 }//Image

@@ -1,6 +1,8 @@
 package com.example.tanksbattle.model.tankobject;
 
 import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO_TOTAL;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -25,7 +27,7 @@ public class Track {
         width = trackA.getWidth();
         height = trackA.getHeight();
         wPH = (double) width / (double) height;
-        width = (int) (trackA.getWidth() / 3 * screenRatioX);
+        width = (int) (trackA.getWidth() * IMAGE_RATIO * IMAGE_RATIO_TOTAL * screenRatioX);
         height = (int) (width / wPH);
         trackA = Bitmap.createScaledBitmap(trackA, width, height, false);
         trackB = Bitmap.createScaledBitmap(trackB, width, height, false);

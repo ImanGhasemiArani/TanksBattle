@@ -1,6 +1,8 @@
 package com.example.tanksbattle.model.tankobject;
 
 import static com.example.tanksbattle.activity.MainActivity.screenRatioX;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO;
+import static com.example.tanksbattle.constant.ConstantData.IMAGE_RATIO_TOTAL;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -22,7 +24,7 @@ public class Gun {
         width = gun.getWidth();
         height = gun.getHeight();
         wPH = (double) width / (double) height;
-        width = (int) (gun.getWidth() / 3 * screenRatioX);
+        width = (int) (gun.getWidth() * IMAGE_RATIO * IMAGE_RATIO_TOTAL * screenRatioX);
         height = (int) (width / wPH);
         gun = Bitmap.createScaledBitmap(gun, width, height, false);
 

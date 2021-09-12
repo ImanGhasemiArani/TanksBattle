@@ -15,6 +15,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.example.tanksbattle.factory.BattlegroundFactory;
 import com.example.tanksbattle.image.Image;
@@ -74,7 +75,6 @@ public class Tank {
         leftMovingFire = new MovingFire(currentMovingFire, x, y, res);
         leftMovingFire.setSwap(-leftMovingFire.getWidth()*4/3f, height/2f);
 
-
     }//Constructor method
 
     public void update(ButtonInterface[] buttons) {
@@ -93,6 +93,8 @@ public class Tank {
     public void updateXY(double increaseX, double increaseY) {
         Rect rect = new Rect((int) (x - hull.getWidth()/2 + increaseX), (int) (y - hull.getHeight()/2 + increaseY),
                 (int) (x+ increaseX + hull.getWidth()/2), (int) (y+ increaseY + hull.getHeight()/2));
+
+//        Rect rect = getCollision();
 
         boolean rX = false, rY = false;
         if (!battlegroundFactory.isCollision(rect)) {
@@ -148,6 +150,7 @@ public class Tank {
     }//updateTankObjects
 
     public void draw(Canvas canvas, Paint paint) {
+
         rightMovingFire.draw(canvas, paint);
         leftMovingFire.draw(canvas, paint);
 
